@@ -28,6 +28,8 @@ export PACKAGES="\
     chos/vulkan-radeon \
     chos/vulkan-nouveau \
     chos/vulkan-swrast \
+	chimeraos-dracut-cfg \
+	chimeraos-fake-mkinitcpio \
     amd-ucode \
     base \
 	accountsservice \
@@ -45,6 +47,7 @@ export PACKAGES="\
 	distrobox \
 	dmidecode \
 	dosbox \
+	dracut \
 	efibootmgr \
 	epiphany \
 	ethtool \
