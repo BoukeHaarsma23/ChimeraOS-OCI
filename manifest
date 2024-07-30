@@ -30,6 +30,8 @@ export PACKAGES="\
     chos/vulkan-swrast \
 	chimeraos-dracut-cfg \
 	chimeraos-fake-mkinitcpio \
+	${KERNEL_PACKAGE} \
+	${KERNEL_PACKAGE}-headers \
     amd-ucode \
     base \
 	accountsservice \
@@ -140,12 +142,6 @@ export PACKAGES="\
 	nfs-utils \
 	noto-fonts-emoji \
 	nss-mdns \
-	nvidia-dkms \
-	opencl-nvidia \
-	lib32-opencl-nvidia \
-	nvidia-utils \
-	lib32-nvidia-utils \
-	nvidia-prime \
 	openal \
 	openrazer-daemon \
 	openssh \
@@ -247,7 +243,6 @@ export SERVICES="\
 	inputplumber \
 	inputplumber-resume \
 	lightdm \
-	nvidia-powerd \
 	powerstation \
 	steam-powerbuttond \
 	sshd \

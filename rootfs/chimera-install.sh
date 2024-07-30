@@ -7,8 +7,6 @@ export FRZR_IMAGE_GENERATION=1
 
 source /manifest
 
-pacman --noconfirm -S ${KERNEL_PACKAGE}
-
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
 	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
 fi
