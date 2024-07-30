@@ -6,8 +6,6 @@ set -x
 export FRZR_IMAGE_GENERATION=1
 
 source /manifest
-pacman-key --init
-pacman-key --populate
 
 pacman --noconfirm -S ${KERNEL_PACKAGE}
 
