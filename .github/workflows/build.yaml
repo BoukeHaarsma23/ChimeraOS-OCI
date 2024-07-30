@@ -22,16 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Maximize build space
-        run: |
-          df -h
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/share/swift
-          sudo rm -rf /usr/share/java
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /opt/hostedtoolcache
-          sudo rm -rf /opt/az
-          df -h
+        uses: ublue-os/remove-unwanted-software@v7
       - uses: actions/checkout@v4
       - name: Create empty system using chimeraos-builder
         run: |
