@@ -7,7 +7,7 @@ on:
     - cron: '0 6 * * *'
 env:
  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
- BUILDER_TAG: ghcr.io/boukehaarsma23/chimeraos-builder:latest
+ BUILDER_TAG: ghcr.io/boukehaarsma23/chimeraos-builder:main
  IMAGE_NAME: chimeraos-oci
 
 permissions:
