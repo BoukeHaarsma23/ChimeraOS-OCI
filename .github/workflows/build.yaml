@@ -4,7 +4,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 6 * * *'
 env:
  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
  BUILDER_TAG: ghcr.io/boukehaarsma23/chimeraos-builder:latest
