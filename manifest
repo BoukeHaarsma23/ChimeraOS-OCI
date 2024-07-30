@@ -1,0 +1,102 @@
+#! /bin/bash
+
+export VERSION="48"
+export SYSTEM_DESC="ChimeraOS"
+export SYSTEM_NAME="chimeraos"
+export USERNAME="gamer"
+export WEBSITE="https://chimeraos.org"
+export DOCUMENTATION_URL="https://chimeraos.org/about"
+export BUG_REPORT_URL="https://github.com/ChimeraOS/chimeraos/issues"
+
+export PACKAGES="\
+    chos/lib32-mesa \
+    chos/lib32-vulkan-mesa-layers \
+    chos/lib32-vulkan-radeon \
+    chos/mesa \
+    chos/mesa-vdpau \
+    chos/vulkan-mesa-layers \
+    chos/vulkan-radeon \
+    amd-ucode \
+    base \
+    cosmic-applets-git \
+    cosmic-icons-git \
+    cosmic-randr-git \
+    cosmic-applibrary-git \
+    cosmic-launcher-git \
+    cosmic-screenshot-git \
+    cosmic-bg-git \
+    cosmic-notifications-git \
+    cosmic-settings-daemon-git \
+    cosmic-comp-git \
+    cosmic-osd-git \
+    cosmic-settings-git \
+    cosmic-greeter-git \
+    cosmic-panel-git \
+    cosmic-workspaces-git \
+    dracut \
+    cpupower \
+    distrobox \
+    efibootmgr \
+    flatpak \
+    gamescope \
+    gamescope-session-git \
+    gamescope-session-steam-git \
+    linux \
+    mangohud \
+    nano \
+    steam \
+    which \
+    zenergy-dkms-git \
+    "
+
+export PACKAGE_OVERRIDES="\
+    "
+
+export SERVICES="\
+    NetworkManager \
+    bluetooth \
+    fstrim.timer \
+    "
+
+export USER_SERVICES="\
+    pipewire \
+    chimera-cart-monitor.service \
+    "
+
+export FILES_TO_DELETE="\
+    /boot/initramfs-linux-fallback.img \
+    /usr/share/SFML \
+    /usr/share/doc \
+    /usr/share/gtk-doc \
+    /usr/share/help \
+    /usr/share/man \
+    "
+
+postinstallhook() {
+	# Add sudo permissions
+	sed -i '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers
+	echo "${USERNAME} ALL=(ALL) NOPASSWD: /usr/bin/dmidecode -t 11
+	" >/etc/sudoers.d/steam
+	echo "${USERNAME} ALL=(ALL) NOPASSWD: /usr/bin/chimera-session-use-gamescope
+	${USERNAME} ALL=(ALL) NOPASSWD: /usr/bin/chimera-session-use-lightdm
+	${USERNAME} ALL=(ALL) NOPASSWD: /usr/share/chimera/bin/power-tool
+	" >/etc/sudoers.d/chimera
+
+	# clean up desktop shortcuts
+	sed -i -e 's/Name=Steam (Runtime)/Name=Steam/' /usr/share/applications/steam.desktop
+	find /usr/share/applications/* |
+		grep -v org.chimeraos.Gamescope.desktop |
+		grep -v org.chimeraos.app.desktop |
+		grep -v org.gnome.Console.desktop |
+		grep -v org.gnome.DiskUtility.desktop |
+		grep -v org.gnome.FileRoller.desktop |
+		grep -v org.gnome.Nautilus.desktop |
+		grep -v org.gnome.Settings.desktop |
+		grep -v org.gnome.Software.desktop |
+		grep -v org.gnome.TextEditor.desktop |
+		grep -v steam.desktop |
+		xargs -I {} sh -c "echo NoDisplay=true >> {}"
+
+	# force -steamdeck option in desktop mode to prevent constant steam updates
+	sed -i 's,Exec=/usr/bin/steam-runtime,Exec=/usr/bin/steam-runtime -steamdeck,' /usr/share/applications/steam.desktop
+}
