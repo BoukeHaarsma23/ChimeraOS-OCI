@@ -49,8 +49,7 @@ export PACKAGES="\
     zenergy-dkms-git \
     "
 
-export PACKAGE_OVERRIDES="\
-    "
+export PACKAGE_OVERRIDES=""
 
 export SERVICES="\
     NetworkManager \

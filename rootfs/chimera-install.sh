@@ -9,8 +9,8 @@ source /manifest
 pacman-key --init
 pacman-key --populate
 
-if [ -n "${PACKAGE_OVERRIDES}" ]; then
-    pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}
+if [ -n "${PACKAGE_OVERRIDES}" ]; then 
+	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
 fi
 
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
