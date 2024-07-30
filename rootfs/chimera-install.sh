@@ -9,6 +9,8 @@ source /manifest
 pacman-key --init
 pacman-key --populate
 
+pacman --noconfirm -S ${KERNEL_PACKAGE}
+
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
 	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
 fi
