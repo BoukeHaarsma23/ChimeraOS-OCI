@@ -194,7 +194,7 @@ export PACKAGES="\
     chimeraos-device-quirks-git \
     downgrade \
     evdev-keepalive \
-    frzr \
+    frzr-git \
     gamescope-plus \
     gamescope-session-steam-git \
     gamescope-session-steam-plus-git \
