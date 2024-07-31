@@ -195,7 +195,7 @@ export PACKAGES="\
     downgrade \
     evdev-keepalive \
     frzr \
-    gamescope-plus \
+    gamescope \
     gamescope-session-steam-git \
     gamescope-session-steam-plus-git \
     hhfc-git \
