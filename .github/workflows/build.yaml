@@ -21,9 +21,15 @@ jobs:
     name: Build System
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Get version from manifest
+        id: version
+        run: |
+          source ./manifest
+          echo "VERSION=`echo ${VERSION}`" >> "$GITHUB_OUTPUT"
+          echo "SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> "$GITHUB_OUTPUT"
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@v7
-      - uses: actions/checkout@v4
       - name: Create empty system using chimeraos-builder
         run: |
           docker run --privileged -v $(pwd)/mnt:/mnt -v $(pwd):/workdir ${{ env.BUILDER_TAG }} /bin/bash /workdir/base.sh
@@ -38,8 +44,9 @@ jobs:
       # Build image using Buildah
       - name: Build Image
         id: build_image
-        run:
-          sudo buildah bud -f ./Containerfile --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }} .
+        run: |
+          sudo buildah bud -f ./Containerfile --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} --label frzr.image.version="${{ steps.version.outputs.VERSION }}-${{ steps.version.outputs.SHA }}" --build-arg VERSION="${{ steps.version.outputs.VERSION }}-${{ steps.version.outputs.SHA }}" -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }} .
+
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
         id: push
