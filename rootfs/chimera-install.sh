@@ -9,9 +9,6 @@ source /manifest
 pacman-key --init
 pacman-key --populate
 
-# Reinstall linux as workaround now for initramfs
-pacman --noconfirm -S linux
-
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
 	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
 fi
