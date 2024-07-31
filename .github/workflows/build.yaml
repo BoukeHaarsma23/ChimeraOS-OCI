@@ -26,6 +26,7 @@ jobs:
         id: version
         run: |
           source ./manifest
+          echo "SYSTEM_NAME=`echo ${SYSTEM_NAME}`" >> "$GITHUB_OUTPUT"
           echo "VERSION=`echo ${VERSION}`" >> "$GITHUB_OUTPUT"
           echo "SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> "$GITHUB_OUTPUT"
       - name: Maximize build space
@@ -45,7 +46,7 @@ jobs:
       - name: Build Image
         id: build_image
         run: |
-          sudo buildah bud -f ./Containerfile --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} --label frzr.image.version="${{ steps.version.outputs.VERSION }}-${{ steps.version.outputs.SHA }}" --build-arg VERSION="${{ steps.version.outputs.VERSION }}-${{ steps.version.outputs.SHA }}" -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }} .
+          sudo buildah bud -f ./Containerfile --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} --label frzr.image.version="${{ steps.version.outputs.SYSTEM_NAME }}-${{ steps.version.outputs.VERSION }}_${{ steps.version.outputs.SHA }}" --build-arg SHA="${{ steps.version.outputs.SHA }}" -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }} .
 
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR

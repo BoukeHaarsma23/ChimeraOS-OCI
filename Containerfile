@@ -2,6 +2,6 @@ FROM scratch
 COPY mnt /
 COPY rootfs /
 COPY manifest /
-ARG VERSION=""
+ARG SHA=""
 # Run commands in container
-RUN /chimera-install.sh ${VERSION} && rm /chimera-install.sh
+RUN /chimera-install.sh ${SHA} && rm /chimera-install.sh
