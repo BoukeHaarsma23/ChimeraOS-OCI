@@ -8,26 +8,26 @@ export WEBSITE="https://chimeraos.org"
 export DOCUMENTATION_URL="https://chimeraos.org/about"
 export BUG_REPORT_URL="https://github.com/ChimeraOS/chimeraos/issues"
 
-export KERNEL_PACKAGE="linux"
+export KERNEL_PACKAGE="linux-chimeraos"
 export PACKAGES="\
-    chos/lib32-libva-mesa-driver \
-    chos/lib32-mesa \
-    chos/lib32-mesa-vdpau \
-    chos/lib32-opencl-rusticl-mesa \
-    chos/lib32-vulkan-intel \
-    chos/lib32-vulkan-mesa-layers \
-    chos/lib32-vulkan-radeon \
-    chos/lib32-vulkan-nouveau \
-    chos/lib32-vulkan-swrast \
-    chos/libva-mesa-driver \
-    chos/mesa \
-    chos/mesa-vdpau \
-    chos/opencl-rusticl-mesa \
-    chos/vulkan-intel \
-    chos/vulkan-mesa-layers \
-    chos/vulkan-radeon \
-    chos/vulkan-nouveau \
-    chos/vulkan-swrast \
+    chos/lib32-libva-mesa-driver-chimeraos \
+    chos/lib32-mesa-chimeraos \
+    chos/lib32-mesa-vdpau-chimeraos \
+    chos/lib32-opencl-rusticl-mesa-chimeraos \
+    chos/lib32-vulkan-intel-chimeraos \
+    chos/lib32-vulkan-mesa-layers-chimeraos \
+    chos/lib32-vulkan-radeon-chimeraos \
+    chos/lib32-vulkan-nouveau-chimeraos \
+    chos/lib32-vulkan-swrast-chimeraos \
+    chos/libva-mesa-driver-chimeraos \
+    chos/mesa-chimeraos \
+    chos/mesa-vdpau-chimeraos \
+    chos/opencl-rusticl-mesa-chimeraos \
+    chos/vulkan-intel-chimeraos \
+    chos/vulkan-mesa-layers-chimeraos \
+    chos/vulkan-radeon-chimeraos \
+    chos/vulkan-nouveau-chimeraos \
+    chos/vulkan-swrast-chimeraos \
     chimeraos-dracut-cfg \
     chimeraos-fake-mkinitcpio \
     ${KERNEL_PACKAGE} \
