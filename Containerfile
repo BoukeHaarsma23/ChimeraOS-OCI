@@ -1,7 +1,7 @@
 ARG BUILDER="ghcr.io/boukehaarsma23/chimeraos-builder:main"
 FROM ${BUILDER} as builder
 
-FROM archlinux:base
+FROM archlinux:base as frzr-image
 ARG SHA=""
 COPY rootfs /
 COPY manifest /
@@ -15,3 +15,6 @@ RUN cp /etc/pacman.conf /etc/pacman.conf.bak && \
     rm /chimera-install.sh && \
     rm -rf /tmp/repo && \
     mv /etc/pacman.conf.bak /etc/pacman.conf
+
+FROM scratch
+COPY --from=frzr-image / /
