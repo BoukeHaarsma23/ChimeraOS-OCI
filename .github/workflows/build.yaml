@@ -55,7 +55,11 @@ jobs:
       - name: Build Image
         id: build_image
         run: |
-          sudo buildah bud -f ./Containerfile --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} --label frzr.image.version="${{ steps.version.outputs.SYSTEM_NAME }}-${{ steps.version.outputs.VERSION }}_${{ steps.version.outputs.SHA }}" --build-arg SHA="${{ steps.version.outputs.SHA }}" -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }} .
+          sudo buildah bud -f ./Containerfile \
+          --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} \
+          --label frzr.image.version="${{ steps.version.outputs.SYSTEM_NAME }}-${{ steps.version.outputs.VERSION }}_${{ steps.version.outputs.SHA }}"  \
+          --build-arg SHA="${{ steps.version.outputs.SHA }}" \
+          -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}:${GITHUB_REF##*/} .
 
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
