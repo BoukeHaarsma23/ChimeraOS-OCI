@@ -33,6 +33,7 @@ jobs:
           echo "SYSTEM_NAME=`echo ${SYSTEM_NAME}`" >> $GITHUB_ENV
           echo "VERSION=`echo ${VERSION}`" >> $GITHUB_ENV
           echo "SHA_HEAD_SHORT=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+          echo "SHA_BUILDER=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.BUILDER_TAG }})" >> $GITHUB_ENV
       - name: Maximize build space
         run: |
           df -h
@@ -63,6 +64,7 @@ jobs:
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.description=Gaming
             frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
+            frzr.builder=${{ env.SHA_BUILDER }}
 
       - name: Generate tags
         id: tags
