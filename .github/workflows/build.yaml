@@ -54,19 +54,6 @@ jobs:
         with:
           string: ${{ env.IMAGE_REGISTRY }}
 
-      # Build metadata
-      - name: Image Metadata
-        uses: docker/metadata-action@v5
-        id: meta
-        with:
-          images: |
-            ${{ env.IMAGE_NAME }}
-          labels: |
-            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            org.opencontainers.image.description=Gaming
-            frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
-            frzr.builder=${{ env.SHA_BUILDER }}
-
       - name: Generate tags
         id: tags
         run: |
@@ -103,17 +90,24 @@ jobs:
 
       # Build image using Buildah action
       - name: Build Image
+        uses: Wandalen/wretry.action@v3.5.0
         id: build_image
-        uses: redhat-actions/buildah-build@v2
         with:
-          containerfiles: ./Containerfile
-          image: ${{ env.IMAGE_NAME }}
-          tags: |
-            ${{ steps.tags.outputs.alias_tags }}
-          build-args: |
-            SHA=${{ env.SHA_HEAD_SHORT }}
-          labels: |
-            ${{ steps.meta.outputs.labels }}
+          action: redhat-actions/buildah-build@v2
+          attempt_limit: 5
+          attempt_delay: 15000
+          with: |
+            containerfiles: ./Containerfile
+            image: ${{ env.IMAGE_NAME }}
+            tags: |
+              ${{ steps.tags.outputs.alias_tags }}
+            build-args: |
+              SHA=${{ env.SHA_HEAD_SHORT }}
+            labels: |
+              org.opencontainers.image.title=${{ env.IMAGE_NAME }}
+              org.opencontainers.image.description=Gaming
+              frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
+              frzr.builder=${{ env.SHA_BUILDER }}
 
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
