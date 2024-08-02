@@ -30,9 +30,9 @@ jobs:
         id: version
         run: |
           source ./manifest
-          echo "SYSTEM_NAME=`echo ${SYSTEM_NAME}`" >> "$GITHUB_OUTPUT"
-          echo "VERSION=`echo ${VERSION}`" >> "$GITHUB_OUTPUT"
-          echo "SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> "$GITHUB_OUTPUT"
+          echo "SYSTEM_NAME=`echo ${SYSTEM_NAME}`" >> $GITHUB_ENV
+          echo "VERSION=`echo ${VERSION}`" >> $GITHUB_ENV
+          echo "SHA_HEAD_SHORT=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
       - name: Maximize build space
         run: |
           df -h
@@ -52,22 +52,82 @@ jobs:
         with:
           string: ${{ env.IMAGE_REGISTRY }}
 
-      # Build image using Buildah
+      # Build metadata
+      - name: Image Metadata
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: |
+            ${{ env.IMAGE_NAME }}
+          labels: |
+            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
+            org.opencontainers.image.description=Gaming
+            frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
+
+      - name: Generate tags
+        id: tags
+        run: |
+          # Generate a timestamp for creating an image version history
+          TIMESTAMP="$(date +%Y%m%d)"
+          COMMIT_TAGS=()
+          BUILD_TAGS=()
+
+          if [[ ${{ github.ref_name }} == "unstable" ]]; then
+             BUILD_TAGS=("unstable" "unstable-${TIMESTAMP}")
+             echo "DEFAULT_TAG=unstable" >> $GITHUB_ENV
+          elif [[ ${{ github.ref_name }} == "testing" ]]; then
+             BUILD_TAGS=("testing" "testing-${TIMESTAMP}")
+             echo "DEFAULT_TAG=testing" >> $GITHUB_ENV
+          else
+             BUILD_TAGS+=("latest" "stable")
+             echo "DEFAULT_TAG=latest" >> $GITHUB_ENV
+          fi
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              echo "Generated the following commit tags: "
+              for TAG in "${COMMIT_TAGS[@]}"; do
+                  echo "${TAG}"
+              done
+              alias_tags=("${COMMIT_TAGS[@]}")
+          else
+              alias_tags=("${BUILD_TAGS[@]}")
+          fi
+          echo "Generated the following build tags: "
+          for TAG in "${BUILD_TAGS[@]}"; do
+              echo "${TAG}"
+          done
+          echo "alias_tags=${alias_tags[*]}" >> $GITHUB_OUTPUT
+
+      # Build image using Buildah action
       - name: Build Image
         id: build_image
-        run: |
-          sudo buildah bud -f ./Containerfile \
-          --label org.opencontainers.image.title=${{ env.IMAGE_NAME }} \
-          --label frzr.image.version="${{ steps.version.outputs.SYSTEM_NAME }}-${{ steps.version.outputs.VERSION }}_${{ steps.version.outputs.SHA }}"  \
-          --build-arg SHA="${{ steps.version.outputs.SHA }}" \
-          -t ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}:${GITHUB_REF##*/} .
+        uses: redhat-actions/buildah-build@v2
+        with:
+          containerfiles: ./Containerfile
+          image: ${{ env.IMAGE_NAME }}
+          tags: |
+            ${{ steps.tags.outputs.alias_tags }}
+          build-args: |
+            SHA=${{ env.SHA_HEAD_SHORT }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
 
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
+        uses: Wandalen/wretry.action@v3.5.0
         id: push
-        if: github.event_name != 'pull_request'
         env:
           REGISTRY_USER: ${{ github.actor }}
           REGISTRY_PASSWORD: ${{ github.token }}
-        run: |
-          sudo buildah push --creds=${{ env.REGISTRY_USER }}:${{ env.REGISTRY_PASSWORD }} ${{ env.IMAGE_NAME }} ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}
+        with:
+          action: redhat-actions/push-to-registry@v2
+          attempt_limit: 3
+          attempt_delay: 15000
+          with: |
+            image: ${{ steps.build_image.outputs.image }}
+            tags: ${{ steps.build_image.outputs.tags }}
+            registry: ${{ steps.registry_case.outputs.lowercase }}
+            username: ${{ env.REGISTRY_USER }}
+            password: ${{ env.REGISTRY_PASSWORD }}
+            extra-args: |
+              --disable-content-trust
