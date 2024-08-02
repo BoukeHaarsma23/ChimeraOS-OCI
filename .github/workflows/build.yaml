@@ -1,7 +1,11 @@
 name: Build packages
 on:
   push:
-    branches: [ main ]
+    branches: [ 
+      unstable,
+      testing,
+      stable,
+      main ]
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * *'
