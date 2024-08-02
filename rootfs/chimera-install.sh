@@ -95,6 +95,8 @@ HOME_URL=\"${WEBSITE}\"
 DOCUMENTATION_URL=\"${DOCUMENTATION_URL}\"
 BUG_REPORT_URL=\"${BUG_REPORT_URL}\"" > /usr/lib/os-release
 
+cp /usr/lib/os-release /etc/os-release
+
 # install extra certificates
 trust anchor --store /extra_certs/*.crt
 
