@@ -17,6 +17,8 @@ fi
 pacman-key --init
 pacman-key --populate
 
+pacman --noconfirm -Syyuu ${PACKAGES}
+
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
 	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
 fi

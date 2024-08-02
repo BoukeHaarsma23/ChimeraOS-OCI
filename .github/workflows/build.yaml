@@ -44,9 +44,6 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache
           sudo rm -rf /opt/az
           df -h
-      - name: Create empty system using chimeraos-builder
-        run: |
-          docker run --privileged -v $(pwd)/mnt:/mnt -v $(pwd):/workdir ${{ env.BUILDER_TAG }} /bin/bash /workdir/base.sh
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12
       - name: Lowercase Registry
