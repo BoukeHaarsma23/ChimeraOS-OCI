@@ -131,6 +131,8 @@ rm -rf \
 /var/log \
 /var/lib/pacman/local \
 
+rm -rf /var/cache/pacman/pkg
+
 rm -rf ${FILES_TO_DELETE}
 
 # create necessary directories
