@@ -26,13 +26,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Get version from manifest
+      - name: Populate version numbers
         id: version
         run: |
           source ./manifest
           echo "SYSTEM_NAME=`echo ${SYSTEM_NAME}`" >> $GITHUB_ENV
           echo "VERSION=`echo ${VERSION}`" >> $GITHUB_ENV
           echo "SHA_HEAD_SHORT=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+          docker pull ${{ env.BUILDER_TAG }}
           echo "SHA_BUILDER=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.BUILDER_TAG }})" >> $GITHUB_ENV
       - name: Maximize build space
         run: |
