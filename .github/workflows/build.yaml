@@ -74,7 +74,7 @@ jobs:
           COMMIT_TAGS=()
           BUILD_TAGS=()
 
-          if [[ ${{ github.ref_name }} == "unstable" ]]; then
+          if [[ ${{ github.ref_name }} == "main" ]]; then
              BUILD_TAGS=("unstable" "unstable-${TIMESTAMP}")
              echo "DEFAULT_TAG=unstable" >> $GITHUB_ENV
           elif [[ ${{ github.ref_name }} == "testing" ]]; then
