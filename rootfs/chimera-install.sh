@@ -17,6 +17,10 @@ fi
 pacman-key --init
 pacman-key --populate
 
+# This will prevent frzr bootloader from erroring when installing kernels
+# due to the pacman hook being executed at kernel-install time
+export FRZR_IMAGE_GENERATION=1
+
 pacman --noconfirm -Syyuu ${PACKAGES}
 
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
