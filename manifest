@@ -28,42 +28,56 @@ export PACKAGES="\
     chos/vulkan-radeon \
     chos/vulkan-nouveau \
     chos/vulkan-swrast \
+    chimera \
     chimeraos-dracut-cfg \
     chimeraos-fake-mkinitcpio \
+    chimeraos-device-quirks-git \
     ${KERNEL_PACKAGE} \
     ${KERNEL_PACKAGE}-headers \
-    amd-ucode \
-    base \
+"
+
+PACKAGES+="\
     accountsservice \
     acpi_call-dkms \
     alsa-firmware \
     alsa-utils \
     amd-ucode \
+    asusctl \
+    ayaneo-platform-dkms-git \
+    ayn-platform-dkms-git \
     bash-completion \
+    bcm20702a1-firmware \
+    boxtron \
     broadcom-wl-dkms \
     bzip2 \
     cifs-utils \
     cpupower \
     diffutils \
-    dkms \
     distrobox \
+    dkms \
     dmidecode \
     dosbox \
+    downgrade \
     dracut \
     efibootmgr \
     epiphany \
     ethtool \
+    evdev-keepalive \
     evtest \
     fakeroot \
     ffmpeg \
-    file \
     ffmpegthumbnailer \
+    file \
     firejail \
     flatpak \
     fmt \
+    frzr-git \
+    fuse2\
     fuse-zip \
-    fuse2 \
     fwupd \
+    gamescope-plus \
+    gamescope-session-steam-git \
+    gamescope-session-steam-plus-git \
     git \
     gnome-browser-connector \
     gnome-console \
@@ -78,30 +92,36 @@ export PACKAGES="\
     gnome-text-editor \
     gnome-tweaks \
     gst-plugin-pipewire \
-    gvfs-smb \
     gvfs-nfs \
+    gvfs-smb \
     gzip \
     haveged \
+    hhfc-git \
     htop \
+    inputplumber-bin \
     intel-gpu-tools \
     intel-media-driver \
     intel-ucode \
     intel-undervolt \
+    kanit-font \
+    legendary \
     less \
     lib32-curl \
     lib32-fontconfig \
-    lib32-freetype2 \
+    lib32-freetype2\
     lib32-libgpg-error \
     lib32-libnm \
-    lib32-libxinerama \
-    lib32-libxcrypt-compat \
     lib32-libva \
     lib32-libva-intel-driver \
     lib32-libva-vdpau-driver \
+    lib32-libxcrypt-compat \
+    lib32-libxinerama \
     lib32-mangohud \
+    lib32-nvidia-utils \
     lib32-openal \
+    lib32-opencl-nvidia \
     lib32-pipewire \
-    lib32-sdl2 \
+    lib32-sdl2\
     lib32-systemd \
     lib32-vulkan-icd-loader \
     libcurl-gnutls \
@@ -111,27 +131,33 @@ export PACKAGES="\
     libretro-citra \
     libretro-desmume \
     libretro-dolphin \
+    libretro-dosbox-pure-git \
     libretro-flycast \
     libretro-genesis-plus-gx \
     libretro-kronos \
-    libretro-mesen-s\
+    libretro-mesen-s \
     libretro-mgba \
     libretro-mupen64plus-next \
     libretro-nestopia \
+    libretro-opera-git \
     libretro-picodrive \
     libretro-ppsspp \
+    libretro-prosystem-git \
     libretro-shaders-slang \
     libretro-snes9x \
+    libretro-stella2014-git \
+    libretro-virtualjaguar-git \
     libva-intel-driver \
     libva-vdpau-driver \
     libxcrypt-compat \
     libxss \
     lightdm \
     linux-firmware \
+    linux-firmware-valve \
     liquidctl \
     logrotate \
-    lrzip \
     loupe \
+    lrzip \
     lshw \
     mangohud \
     mesa-demos \
@@ -140,33 +166,46 @@ export PACKAGES="\
     nautilus \
     networkmanager \
     nfs-utils \
+    nintendo-udev \
     noto-fonts-emoji \
     nss-mdns \
     nvidia-dkms \
-	opencl-nvidia \
-	lib32-opencl-nvidia \
-	nvidia-utils \
-	lib32-nvidia-utils \
-	nvidia-prime \
+    nvidia-prime \
+    nvidia-utils \
     openal \
+    opencl-nvidia \
+    opengamepadui-bin \
+    opengamepadui-session-git \
     openrazer-daemon \
     openssh \
     p7zip \
+    pikaur \
     pipewire \
     pipewire-alsa \
     pipewire-jack \
     pipewire-pulse \
     podman \
+    powerstation-bin \
     pulsemixer \
     python \
-    python-notify2 \
+    python-gbopyrator \
+    python-notify2\
+    python-vdf \
     qtractor \
     retroarch \
     rsync \
+    rtl8812au-dkms-git \
+    rtl8814au-dkms-git \
+    rtl8821au-dkms-git \
+    rtl88x2bu-dkms-git \
+    ryzenadj-git \
     smbclient \
     sof-firmware \
     sshfs \
     steam \
+    steam_notif_daemon \
+    steam-powerbuttond-git \
+    steam-removable-media-git \
     sudo \
     tar \
     tree \
@@ -183,56 +222,18 @@ export PACKAGES="\
     which \
     wireplumber \
     wqy-zenhei \
+    wyvern \
     xdg-desktop-portal \
     xdg-desktop-portal-gnome \
     xdg-desktop-portal-wlr \
     xdg-user-dirs-gtk \
     xf86-video-amdgpu \
-    xonedo-firmware \
     xonedo-dkms \
+    xonedo-firmware \
     xorg-server \
     xz \
-    zip \
-    asusctl \
-    ayaneo-platform-dkms-git \
-    ayn-platform-dkms-git \
-    bcm20702a1-firmware \
-    boxtron \
-    chimera \
-    chimeraos-device-quirks-git \
-    downgrade \
-    evdev-keepalive \
-    frzr-git \
-    gamescope-plus \
-    gamescope-session-steam-git \
-    gamescope-session-steam-plus-git \
-    hhfc-git \
-    inputplumber-bin \
-    legendary \
-    libretro-dosbox-pure-git \
-    libretro-opera-git \
-    libretro-prosystem-git \
-    libretro-stella2014-git \
-    libretro-virtualjaguar-git \
-    linux-firmware-valve \
-    kanit-font \
-    nintendo-udev \
-    opengamepadui-bin \
-    opengamepadui-session-git \
-    pikaur \
-    powerstation-bin \
-    python-gbopyrator \
-    python-vdf \
-    rtl8812au-dkms-git \
-    rtl8814au-dkms-git \
-    rtl88x2bu-dkms-git \
-    rtl8821au-dkms-git \
-    ryzenadj-git \
-    steam_notif_daemon \
-    steam-powerbuttond-git \
-    steam-removable-media-git \
-    wyvern \
     zenergy-dkms-git \
+    zip \
 "
 
 export PACKAGE_OVERRIDES="\
