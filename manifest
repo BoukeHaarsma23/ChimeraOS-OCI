@@ -117,9 +117,7 @@ PACKAGES+="\
     lib32-libxcrypt-compat \
     lib32-libxinerama \
     lib32-mangohud \
-    lib32-nvidia-utils \
     lib32-openal \
-    lib32-opencl-nvidia \
     lib32-pipewire \
     lib32-sdl2\
     lib32-systemd \
@@ -169,11 +167,7 @@ PACKAGES+="\
     nintendo-udev \
     noto-fonts-emoji \
     nss-mdns \
-    nvidia-dkms \
-    nvidia-prime \
-    nvidia-utils \
     openal \
-    opencl-nvidia \
     opengamepadui-bin \
     opengamepadui-session-git \
     openrazer-daemon \
@@ -252,7 +246,6 @@ export SERVICES="\
     inputplumber \
     inputplumber-resume \
     lightdm \
-    nvidia-powerd \
     powerstation \
     steam-powerbuttond \
     sshd \
@@ -275,6 +268,20 @@ export FILES_TO_DELETE="\
     /usr/share/help \
     /usr/share/man \
 "
+
+if [[ ${1} == *"nvidia"* ]]; then
+  PACKAGES+=" \
+    lib32-nvidia-utils \
+    lib32-opencl-nvidia \
+    nvidia-dkms \
+    nvidia-prime \
+    nvidia-utils \
+    opencl-nvidia \
+  "
+  SERVICES+=" \
+    nvidia-powerd \
+  "
+fi
 
 postinstallhook() {
     # Add sudo permissions

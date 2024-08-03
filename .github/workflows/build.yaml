@@ -24,6 +24,9 @@ jobs:
     if: github.event_name != 'pull_request'
     name: Build System
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          variant: ["", -nvidia]
     steps:
       - uses: actions/checkout@v4
       - name: Populate version numbers
@@ -63,13 +66,13 @@ jobs:
           BUILD_TAGS=()
 
           if [[ ${{ github.ref_name }} == "main" ]]; then
-             BUILD_TAGS=("unstable" "unstable-${TIMESTAMP}")
-             echo "DEFAULT_TAG=unstable" >> $GITHUB_ENV
+             BUILD_TAGS=("unstable${{ matrix.variant }}" "unstable${{ matrix.variant }}-${TIMESTAMP}")
+             echo "DEFAULT_TAG=unstable${{ matrix.variant }}" >> $GITHUB_ENV
           elif [[ ${{ github.ref_name }} == "testing" ]]; then
-             BUILD_TAGS=("testing" "testing-${TIMESTAMP}")
-             echo "DEFAULT_TAG=testing" >> $GITHUB_ENV
+             BUILD_TAGS=("testing${{ matrix.variant }}" "testing${{ matrix.variant }}-${TIMESTAMP}")
+             echo "DEFAULT_TAG=testing${{ matrix.variant }}" >> $GITHUB_ENV
           else
-             BUILD_TAGS+=("latest" "stable")
+             BUILD_TAGS+=("latest" "stable${{ matrix.variant }}")
              echo "DEFAULT_TAG=latest" >> $GITHUB_ENV
           fi
 
@@ -103,6 +106,7 @@ jobs:
               ${{ steps.tags.outputs.alias_tags }}
             build-args: |
               SHA=${{ env.SHA_HEAD_SHORT }}
+              VARIANT=${{ matrix.variant }}
             labels: |
               org.opencontainers.image.title=${{ env.IMAGE_NAME }}
               org.opencontainers.image.description=Gaming
