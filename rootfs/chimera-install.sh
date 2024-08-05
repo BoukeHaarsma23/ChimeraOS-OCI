@@ -1,20 +1,19 @@
 set -e
 set -x
 
+source /manifest ${2}
+
 DISPLAY_VERSION=${VERSION}
 LSB_VERSION=${VERSION}
 VERSION_NUMBER=${VERSION}
-VARIANT=""
+VARIANT="${2}"
 
 if [ -n "$1" ]; then
 	DISPLAY_VERSION="${VERSION} (${1})"
 	VERSION="${VERSION}_${1}"
 	LSB_VERSION="${LSB_VERSION}　(${1})"
 	BUILD_ID="${1}"
-	VARIANT="${2}"
 fi
-
-source /manifest ${VARIANT}
 
 pacman-key --init
 pacman-key --populate
