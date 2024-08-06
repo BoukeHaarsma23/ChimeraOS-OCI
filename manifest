@@ -10,30 +10,10 @@ export BUG_REPORT_URL="https://github.com/ChimeraOS/chimeraos/issues"
 
 export KERNEL_PACKAGE="linux-chimeraos"
 export PACKAGES="\
-    chos/lib32-libva-mesa-driver \
-    chos/lib32-mesa \
-    chos/lib32-mesa-vdpau \
-    chos/lib32-opencl-rusticl-mesa \
-    chos/lib32-vulkan-intel \
-    chos/lib32-vulkan-mesa-layers \
-    chos/lib32-vulkan-radeon \
-    chos/lib32-vulkan-nouveau \
-    chos/lib32-vulkan-swrast \
-    chos/libva-mesa-driver \
-    chos/mesa \
-    chos/mesa-vdpau \
-    chos/opencl-rusticl-mesa \
-    chos/vulkan-intel \
-    chos/vulkan-mesa-layers \
-    chos/vulkan-radeon \
-    chos/vulkan-nouveau \
-    chos/vulkan-swrast \
     chimera \
     chimeraos-dracut-cfg \
     chimeraos-fake-mkinitcpio \
     chimeraos-device-quirks-git \
-    ${KERNEL_PACKAGE} \
-    ${KERNEL_PACKAGE}-headers \
 "
 
 PACKAGES+="\
@@ -75,7 +55,6 @@ PACKAGES+="\
     fuse2\
     fuse-zip \
     fwupd \
-    gamescope-plus \
     gamescope-session-steam-git \
     gamescope-session-steam-plus-git \
     git \
@@ -269,20 +248,49 @@ export FILES_TO_DELETE="\
     /usr/share/man \
 "
 
-if [[ ${1} == *"nvidia"* ]]; then
-  PACKAGES+=" \
-    lib32-nvidia-utils \
-    lib32-opencl-nvidia \
-    nvidia-dkms \
-    nvidia-prime \
-    nvidia-utils \
-    opencl-nvidia \
-  "
-  SERVICES+=" \
-    nvidia-powerd \
-  "
+if [[ ${1} == *"git" ]]; then
+    PACKAGES+=" \
+        lib32-mesa-git \
+        mesa-git \
+        linux-firmware-git \
+        gamescope-git \
+    "
+elif [[ ${1} == *"nvidia" ]]; then
+    PACKAGES+=" \
+        chos/mesa-vdpau \
+        gamescope-plus \
+        lib32-nvidia-utils \
+        lib32-opencl-nvidia \
+        nvidia-dkms \
+        nvidia-prime \
+        nvidia-utils \
+        opencl-nvidia \
+    "
+    SERVICES+=" \
+        nvidia-powerd \
+        "
+else
+    PACKAGES+=" \
+        chos/lib32-libva-mesa-driver \
+        chos/lib32-mesa \
+        chos/lib32-mesa-vdpau \
+        chos/lib32-opencl-rusticl-mesa \
+        chos/lib32-vulkan-intel \
+        chos/lib32-vulkan-mesa-layers \
+        chos/lib32-vulkan-radeon \
+        chos/lib32-vulkan-nouveau \
+        chos/lib32-vulkan-swrast \
+        chos/libva-mesa-driver \
+        chos/mesa \
+        chos/opencl-rusticl-mesa \
+        chos/vulkan-intel \
+        chos/vulkan-mesa-layers \
+        chos/vulkan-radeon \
+        chos/vulkan-nouveau \
+        chos/vulkan-swrast \
+        gamescope-plus \
+    " 
 fi
-
 postinstallhook() {
     # Add sudo permissions
     sed -i '/%wheel ALL=(ALL:ALL) ALL/s/^# //g' /etc/sudoers

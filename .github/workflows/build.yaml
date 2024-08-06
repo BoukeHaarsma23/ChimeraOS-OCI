@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          variant: ["", -nvidia]
+          variant: ["", -nvidia, -git]
     steps:
       - uses: actions/checkout@v4
       - name: Populate version numbers

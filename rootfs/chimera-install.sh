@@ -22,7 +22,7 @@ pacman-key --populate
 # due to the pacman hook being executed at kernel-install time
 export FRZR_IMAGE_GENERATION=1
 
-pacman --noconfirm -Syyuu --overwrite '*' ${PACKAGES}
+pacman --noconfirm -Syyuu --overwrite '*' ${KERNEL_PACKAGE} ${KERNEL_PACKAGE}-headers ${PACKAGES}
 
 if [ -n "${PACKAGE_OVERRIDES}" ]; then 
 	pacman --noconfirm -U --overwrite '*' ${PACKAGE_OVERRIDES}; 
