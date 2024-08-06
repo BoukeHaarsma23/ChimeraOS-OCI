@@ -112,8 +112,8 @@ postinstallhook
 pacman -Q > /manifest
 
 # preserve installed package database
-mkdir -p /usr/var/lib/pacman
-cp -a /var/lib/pacman/local /usr/var/lib/pacman/
+mkdir -p /usr/var/lib/
+mv /var/lib/pacman /usr/var/lib/
 
 # Since frzr pre-v1.0.0 has an hardcoded cp of /boot/vmlinuz-linux and /boot/initramfs-linux.img
 # create two empty files so that the cp command won't fail: these will be  replaced by a migration hook.
