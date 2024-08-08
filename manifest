@@ -14,6 +14,7 @@ export PACKAGES="\
     chimeraos-dracut-cfg \
     chimeraos-fake-mkinitcpio \
     chimeraos-device-quirks-git \
+    plymouth-theme-chimeraos \
 "
 
 PACKAGES+="\
