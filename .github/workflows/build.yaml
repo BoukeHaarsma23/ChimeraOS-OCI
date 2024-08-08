@@ -38,6 +38,7 @@ jobs:
           echo "SHA_HEAD_SHORT=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
           docker pull ${{ env.BUILDER_TAG }}
           echo "SHA_BUILDER=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.BUILDER_TAG }})" >> $GITHUB_ENV
+          echo "SHA_HEAD_BUILDER=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.BUILDER_TAG }} | cut -f 2 -d ':' | cut -c1-7)" >> $GITHUB_ENV
       - name: Maximize build space
         run: |
           df -h
@@ -110,7 +111,7 @@ jobs:
             labels: |
               org.opencontainers.image.title=${{ env.IMAGE_NAME }}
               org.opencontainers.image.description=Gaming
-              frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
+              frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}.${{ env.SHA_HEAD_BUILDER }}
               frzr.builder=${{ env.SHA_BUILDER }}
     
       # Push the image to GHCR (Image Registry)
