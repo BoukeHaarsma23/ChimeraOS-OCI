@@ -111,7 +111,7 @@ jobs:
             labels: |
               org.opencontainers.image.title=${{ env.IMAGE_NAME }}
               org.opencontainers.image.description=Gaming
-              frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
+              frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}${{ matrix.variant }}
               frzr.builder=${{ env.SHA_BUILDER }}
     
       # Push the image to GHCR (Image Registry)
