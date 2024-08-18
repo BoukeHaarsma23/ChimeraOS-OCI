@@ -27,6 +27,7 @@ jobs:
     strategy:
       matrix:
           variant: ["", -nvidia, -git]
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
       - name: Populate version numbers
