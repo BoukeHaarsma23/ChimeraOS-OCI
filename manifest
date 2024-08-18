@@ -130,8 +130,6 @@ PACKAGES+="\
     libxcrypt-compat \
     libxss \
     lightdm \
-    linux-firmware \
-    linux-firmware-valve \
     liquidctl \
     logrotate \
     loupe \
@@ -266,6 +264,8 @@ elif [[ ${1} == *"nvidia" ]]; then
         nvidia-prime \
         nvidia-utils \
         opencl-nvidia \
+        linux-firmware \
+        linux-firmware-valve \
     "
     SERVICES+=" \
         nvidia-powerd \
@@ -290,6 +290,8 @@ else
         chos/vulkan-nouveau-chimeraos \
         chos/vulkan-swrast-chimeraos \
         gamescope-plus \
+        linux-firmware \
+        linux-firmware-valve \
     " 
 fi
 postinstallhook() {
