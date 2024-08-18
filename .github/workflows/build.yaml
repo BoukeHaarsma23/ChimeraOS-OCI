@@ -113,8 +113,6 @@ jobs:
               org.opencontainers.image.description=Gaming
               frzr.image.version=${{ env.SYSTEM_NAME }}-${{ env.VERSION }}_${{ env.SHA_HEAD_SHORT }}
               frzr.builder=${{ env.SHA_BUILDER }}
-            extra-args: |
-              --isolation chroot
     
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
