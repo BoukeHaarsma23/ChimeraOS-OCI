@@ -170,7 +170,6 @@ PACKAGES+="\
     rtl8812au-dkms-git \
     rtl8814au-dkms-git \
     rtl8821au-dkms-git \
-    rtl88x2bu-dkms-git \
     ryzenadj-git \
     smbclient \
     sof-firmware \
