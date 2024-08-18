@@ -147,3 +147,8 @@ mkdir -p /home
 mkdir -p /frzr_root
 mkdir -p /efi
 mkdir -p /var/log
+
+echo "${SYSTEM_NAME}-${VERSION}" > /build_info
+echo "" >> /build_info
+cat /manifest >> /build_info
+rm /manifest
