@@ -9,9 +9,9 @@ VERSION_NUMBER=${VERSION}
 VARIANT="${2}"
 
 if [ -n "$1" ]; then
-	DISPLAY_VERSION="${VERSION} (${1})"
-	VERSION="${VERSION}_${1}"
-	LSB_VERSION="${LSB_VERSION}　(${1})"
+	DISPLAY_VERSION="${VERSION} (${1}${2})"
+	VERSION="${VERSION}_${1}${2}"
+	LSB_VERSION="${LSB_VERSION}　(${1}${2})"
 	BUILD_ID="${1}"
 fi
 
