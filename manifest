@@ -24,6 +24,7 @@ PACKAGES+="\
     alsa-utils \
     amd-ucode \
     asusctl \
+    aw87559-firmware \
     ayaneo-platform-dkms-git \
     ayn-platform-dkms-git \
     bash-completion \
