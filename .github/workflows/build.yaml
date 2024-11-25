@@ -94,7 +94,7 @@ jobs:
 
       # Build image using Buildah action
       - name: Build Image
-        uses: Wandalen/wretry.action@v3.5.0
+        uses: Wandalen/wretry.action@v3.7.3
         id: build_image
         with:
           action: redhat-actions/buildah-build@v2
@@ -116,7 +116,7 @@ jobs:
     
       # Push the image to GHCR (Image Registry)
       - name: Push To GHCR
-        uses: Wandalen/wretry.action@v3.5.0
+        uses: Wandalen/wretry.action@v3.7.3
         id: push
         env:
           REGISTRY_USER: ${{ github.actor }}
